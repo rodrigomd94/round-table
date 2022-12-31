@@ -7,13 +7,13 @@ type GraphQL = {
 
 type QueryAPI = GraphQL
 
-type Network = 'mainnet' | 'testnet' | 'preview'
+type Network = 'mainnet' | 'testnet' | 'mainnet'
 
 const parseNetwork = (text: string): Network => {
   switch (text) {
     case 'mainnet': return 'mainnet'
     case 'testnet': return 'testnet'
-    case 'preview': return 'preview'
+    case 'mainnet': return 'mainnet'
     default: throw new Error('Unknown network')
   }
 }
@@ -29,17 +29,17 @@ type Config = {
 const isMainnet = (config: Config) => config.network === 'mainnet'
 
 const defaultGraphQLMainnet = 'https://d.graphql-api.mainnet.dandelion.link'
-const defaultGraphQLTestnet = 'https://graphql.preview.lidonation.com/graphql'
+const defaultGraphQLTestnet = 'https://graphql.mainnet.lidonation.com/graphql'
 const defaultSubmitURIMainnet = [
   'https://adao.panl.org',
   'https://submit-api.apexpool.info/api/submit/tx'
 ]
 const defaultSubmitURITestnet = [
-  'https://sa-preview.apexpool.info/api/submit/tx',
-  'https://preview-submit.panl.org'
+  'https://sa-mainnet.apexpool.info/api/submit/tx',
+  'https://mainnet-submit.panl.org'
 ]
 const defaultSMASHMainnet = 'https://mainnet-smash.panl.org'
-const defaultSMASHTestnet = 'https://preview-smash.panl.org'
+const defaultSMASHTestnet = 'https://mainnet-smash.panl.org'
 
 const defaultConfig: Config = {
   network: 'mainnet',

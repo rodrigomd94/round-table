@@ -453,9 +453,9 @@ const SignatureSync: FC<{
   signatures: Map<string, Vkeywitness>
   addSignatures: (witnessSetHex: string) => void
   signers: Set<string>
-  config: Config
-}> = ({ cardano, txHash, signatures, signers, addSignatures, config }) => {
-  const [isOn, setIsOn] = useState(false)
+}> = ({ cardano, txHash, signatures, signers, addSignatures }) => {
+  const [config, _] = useContext(ConfigContext)
+  const [isOn, setIsOn] = useState(true)
   const [gun, setGUN] = useState<IGunInstance<any> | undefined>(undefined)
   const switchToggle = useCallback(() => setIsOn(!isOn), [isOn])
   const peers = config.gunPeers
@@ -787,6 +787,7 @@ const TransactionViewer: FC<{
           </div>}
         </div>
         <footer className='flex p-4 bg-gray-100 space-x-2'>
+          
           <SignTxButton
             transaction={transaction}
             requiredKeyHashHexes={Array.from(signerRegistry)}
@@ -802,6 +803,16 @@ const TransactionViewer: FC<{
             <ShareIcon className='w-4' />
             <span>Copy Signatures</span>
           </CopyVkeysButton>
+          <div className='flex space-x-1 items-center'>
+            <SignatureSync
+              cardano={cardano}
+              txHash={txHash}
+              signatures={signatureMap}
+              signers={signerRegistry}
+              addSignatures={addSignatures}
+            />
+            <div className='text-sm'>Auto sync the signatures with other signers</div>
+          </div>
           <div className='flex grow justify-end items-center space-x-4'>
             <SubmitTxButton
               className='flex p-2 items-center space-x-1 bg-sky-700 text-white rounded disabled:border disabled:bg-gray-100 disabled:text-gray-400'
@@ -810,6 +821,7 @@ const TransactionViewer: FC<{
               <span>Submit</span>
             </SubmitTxButton>
           </div>
+          
         </footer>
       </Panel>
     </div>
